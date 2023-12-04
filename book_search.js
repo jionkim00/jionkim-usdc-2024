@@ -22,10 +22,28 @@
     /** You will need to implement your search and 
      * return the appropriate object here. */
 
+    // result is now initialized with the SearchTerm
     var result = {
-        "SearchTerm": "",
+        "SearchTerm": searchTerm,
         "Results": []
     };
+    
+    // outer for loop represents looking through different books and saves the ISBN in case a match is found
+    for (i = 0; i < scannedTextObj.length; i++) {
+        let ISBN = scannedTextObj[i]["ISBN"];
+
+        // inner for loop goes through the each object in the content and if the text includes the searchTerm, then the ISBN, Page, and Line are pushed to the "Results" array in the results object
+        for (j = 0; j < scannedTextObj[i]["Content"].length; j++){
+            if (scannedTextObj[i]["Content"][j]["Text"].includes(searchTerm)){
+                result["Results"].push({
+                                            "ISBN" : ISBN,
+                                            "Page" : scannedTextObj[i]["Content"][j]["Page"],
+                                            "Line" : scannedTextObj[i]["Content"][j]["Line"]
+                })
+            }
+        }
+
+    }
     
     return result; 
 }
